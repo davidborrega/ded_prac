@@ -1,2 +1,2 @@
-# ded_prac
-UOC - Pràctica assignatura DED
+DS - PR1
+
