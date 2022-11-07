@@ -1,6 +1,11 @@
 package uoc.ds.pr;
 
 import edu.uoc.ds.traversal.Iterator;
+import uoc.ds.pr.exceptions.*;
+import uoc.ds.pr.model.File;
+import uoc.ds.pr.model.OrganizingEntity;
+import uoc.ds.pr.model.Player;
+import uoc.ds.pr.model.SportEvent;
 
 import java.time.LocalDate;
 
