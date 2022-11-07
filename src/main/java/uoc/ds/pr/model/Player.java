@@ -35,7 +35,7 @@ public class Player {
         return name;
     }
 
-    public String setSurname() {
+    public void setSurname(String surname) {
         this.surname = surname;
     }
 
@@ -49,6 +49,11 @@ public class Player {
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    // TODO
+    public int numEvents() {
+        return 0;
     }
 
 }
