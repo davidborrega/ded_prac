@@ -11,7 +11,6 @@ public class ResourceUtilTest {
     @Test
     public void hasFlagTest1() {
         byte resource = ResourceUtil.getFlag(FLAG_PUBLIC_SECURITY, FLAG_PRIVATE_SECURITY, FLAG_BASIC_LIFE_SUPPORT);
-
         Assert.assertTrue(ResourceUtil.hasPublicSecurity(resource));
         Assert.assertTrue(ResourceUtil.hasPrivateSecurity(resource));
         Assert.assertTrue(ResourceUtil.hasBasicLifeSupport(resource));
@@ -33,7 +32,6 @@ public class ResourceUtilTest {
     @Test
     public void hasFlagTest3() {
         byte resource = ResourceUtil.getFlag(FLAG_ALL_OPTS);
-
         Assert.assertTrue(ResourceUtil.hasPublicSecurity(resource));
         Assert.assertTrue(ResourceUtil.hasVolunteers(resource));
         Assert.assertTrue(ResourceUtil.hasPrivateSecurity(resource));
