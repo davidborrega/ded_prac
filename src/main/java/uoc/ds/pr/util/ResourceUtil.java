@@ -21,19 +21,32 @@ public class ResourceUtil {
     }
 
     public static boolean hasPrivateSecurity(byte resource) {
-        return resource >= SportEvents4Club.FLAG_PRIVATE_SECURITY;
+        String bString = Integer.toBinaryString(resource);
+        return bString.charAt(bString.length()) == 1;
+        //return resource >= SportEvents4Club.FLAG_PRIVATE_SECURITY;
     }
 
     public static boolean hasPublicSecurity(byte resource) {
-        return resource >= SportEvents4Club.FLAG_PUBLIC_SECURITY;
+        String bString = Integer.toBinaryString(resource);
+        System.out.println(bString);
+        System.out.println(bString.trim().charAt(bString.length()-1));
+        System.out.println(bString.trim().charAt(bString.length()-1) == 1);
+        return bString.charAt(bString.length()-1) == 1;
+
+        //        return resource >= SportEvents4Club.FLAG_PUBLIC_SECURITY;
     }
 
     public static boolean hasBasicLifeSupport(byte resource) {
-        return resource >= SportEvents4Club.FLAG_BASIC_LIFE_SUPPORT;
+        String bString = Integer.toBinaryString(resource);
+        return bString.charAt(bString.length()-2) == 1;
+
+        //return resource >= SportEvents4Club.FLAG_BASIC_LIFE_SUPPORT;
     }
 
     public static boolean hasVolunteers(byte resource) {
-        return resource >= SportEvents4Club.FLAG_VOLUNTEERS;
+        String bString = Integer.toBinaryString(resource);
+        return bString.charAt(bString.length()-3) == 1;
+        //return resource >= SportEvents4Club.FLAG_VOLUNTEERS;
     }
 
     public static boolean hasAllOpts(byte resource) {
