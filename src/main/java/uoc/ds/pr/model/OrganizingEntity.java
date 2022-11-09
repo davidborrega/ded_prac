@@ -7,7 +7,7 @@ public class OrganizingEntity {
 
     private String description;
 
-    public OrganizingEntity(int id) {
+    public OrganizingEntity(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;

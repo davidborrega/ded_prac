@@ -4,20 +4,12 @@ import uoc.ds.pr.SportEvents4Club;
 
 public class ResourceUtil {
 
-    public static byte getFlag(byte param1) {
-        return param1;
-    }
-
-    public static byte getFlag(byte param1, byte param2) {
-        return (byte) (param1 + param2);
-    }
-
-    public static byte getFlag(byte param1, byte param2, byte param3) {
-        return (byte) (param1 + param2 + param3);
-    }
-
-    public static byte getFlag(byte param1, byte param2, byte param3, byte param4) {
-        return (byte) (param1 + param2 + param3 + param4);
+    public static byte getFlag(byte ... flags) {
+        byte flag = 0;
+        for (int i = 0; i < flags.length; i++) {
+            flag += flags[i];
+        }
+        return flag;
     }
 
     public static boolean hasPrivateSecurity(byte resource) {

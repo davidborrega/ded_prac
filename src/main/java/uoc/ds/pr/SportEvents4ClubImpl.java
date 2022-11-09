@@ -47,8 +47,13 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addOrganizingEntity(int id, String name, String description) {
-        OrganizingEntity organizingEntity = new OrganizingEntity(id);
+        OrganizingEntity organizingEntity = new OrganizingEntity(id, name, description);
+        if (organizingEntity == null) {
 
+        } else {
+            organizingEntity.setName(name);
+            organizingEntity.setDescription(description);
+        }
     }
 
     @Override
