@@ -21,22 +21,22 @@ public class ResourceUtil {
     }
 
     public static boolean hasPrivateSecurity(byte resource) {
-        return ((SportEvents4Club.FLAG_PRIVATE_SECURITY) & (resource)) == resource;
+        return ((SportEvents4Club.FLAG_PRIVATE_SECURITY) & (resource)) == SportEvents4Club.FLAG_PRIVATE_SECURITY;
     }
 
     public static boolean hasPublicSecurity(byte resource) {
-        return ((SportEvents4Club.FLAG_PUBLIC_SECURITY) & (resource)) == resource;
+        return ((SportEvents4Club.FLAG_PUBLIC_SECURITY) & (resource)) == SportEvents4Club.FLAG_PUBLIC_SECURITY;
     }
 
     public static boolean hasBasicLifeSupport(byte resource) {
-        return ((SportEvents4Club.FLAG_BASIC_LIFE_SUPPORT) & (resource)) == resource;
+        return ((SportEvents4Club.FLAG_BASIC_LIFE_SUPPORT) & (resource)) == SportEvents4Club.FLAG_BASIC_LIFE_SUPPORT;
     }
 
     public static boolean hasVolunteers(byte resource) {
-        return ((SportEvents4Club.FLAG_VOLUNTEERS) & (resource)) == resource;
+        return ((SportEvents4Club.FLAG_VOLUNTEERS) & (resource)) == SportEvents4Club.FLAG_VOLUNTEERS;
     }
 
     public static boolean hasAllOpts(byte resource) {
-        return ((SportEvents4Club.FLAG_ALL_OPTS) & (resource)) == resource;
+        return ((SportEvents4Club.FLAG_ALL_OPTS) & (resource)) == SportEvents4Club.FLAG_ALL_OPTS;
     }
 }
