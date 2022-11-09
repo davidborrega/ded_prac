@@ -38,6 +38,8 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             if (this.numberOfPlayers >= MAX_NUM_PLAYER) {
                 throw new LimitExceededException();
             }
+            this.players[numberOfPlayers] = new Player(id, name, surname, dateOfBirth);
+            this.numberOfPlayers++;
         } else {
             player.setName(name);
             player.setSurname(surname);
@@ -46,10 +48,14 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     }
 
     @Override
-    public void addOrganizingEntity(int id, String name, String description) {
+    public void addOrganizingEntity(int id, String name, String description) throws LimitExceededException {
         OrganizingEntity organizingEntity = new OrganizingEntity(id, name, description);
         if (organizingEntity == null) {
-
+            if (this.numberOfOrganizingEntities >= MAX_NUM_ORGANIZING_ENTITIES) {
+                throw new LimitExceededException();
+            }
+            this.organizingEntities[numberOfOrganizingEntities] = new OrganizingEntity(id, name, description);
+            this.numberOfOrganizingEntities++;
         } else {
             organizingEntity.setName(name);
             organizingEntity.setDescription(description);

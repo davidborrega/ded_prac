@@ -75,7 +75,7 @@ public class SportEvents4ClubPR1Test {
 
 
     @Test
-    public void addOrganizingEntityTest() {
+    public void addOrganizingEntityTest() throws LimitExceededException {
         // GIVEN:
         initialState();
         //

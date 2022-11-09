@@ -95,7 +95,7 @@ public interface SportEvents4Club {
      * @param name the name
      * @param description the description
      */
-    public void addOrganizingEntity (int id, String name, String description);
+    public void addOrganizingEntity (int id, String name, String description) throws LimitExceededException;
 
     /**
      * Create a file about a new sporting event
