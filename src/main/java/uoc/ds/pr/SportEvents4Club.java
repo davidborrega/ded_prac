@@ -79,7 +79,7 @@ public interface SportEvents4Club {
      * @param surname the surname
      * @param dateOfBirth the date of birth
      */
-    public void addPlayer(String id, String name, String surname, LocalDate dateOfBirth);
+    public void addPlayer(String id, String name, String surname, LocalDate dateOfBirth) throws LimitExceededException;
 
     /**
      * Add an organizing entity in the system. Of each organizing entity we know

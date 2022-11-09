@@ -53,7 +53,7 @@ public class SportEvents4ClubPR1Test {
     }
 
     @Test
-    public void addPlayerTest() {
+    public void addPlayerTest() throws LimitExceededException {
 
         // GIVEN:
         initialState();

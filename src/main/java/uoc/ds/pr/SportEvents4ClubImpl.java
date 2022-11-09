@@ -10,13 +10,44 @@ import uoc.ds.pr.model.SportEvent;
 import java.time.LocalDate;
 
 public class SportEvents4ClubImpl implements SportEvents4Club {
-    @Override
-    public void addPlayer(String id, String name, String surname, LocalDate dateOfBirth) {
 
+    // Set array of players
+    private Player players[];
+    private int numberOfPlayers;
+
+    // Set array of organizing entities
+    private OrganizingEntity organizingEntities[];
+    private int numberOfOrganizingEntities;
+
+    // Set most active player
+    private Player mostActivePlayer;
+
+    public SportEvents4ClubImpl() {
+        // Initialize array of players
+        this.players = new Player[MAX_NUM_PLAYER];
+        this.numberOfPlayers = 0;
+        // Initialize array of organizingEntities;
+        this.organizingEntities = new OrganizingEntity[MAX_NUM_ORGANIZING_ENTITIES];
+        this.numberOfOrganizingEntities = 0;
+    }
+
+    @Override
+    public void addPlayer(String id, String name, String surname, LocalDate dateOfBirth) throws LimitExceededException {
+        Player player =  this.getPlayer(id);
+        if (player == null) {
+            if (this.numberOfPlayers >= MAX_NUM_PLAYER) {
+                throw new LimitExceededException();
+            }
+        } else {
+            player.setName(name);
+            player.setSurname(surname);
+            player.setDateOfBirth(dateOfBirth);
+        }
     }
 
     @Override
     public void addOrganizingEntity(int id, String name, String description) {
+        OrganizingEntity organizingEntity = new OrganizingEntity(id);
 
     }
 
@@ -67,7 +98,10 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Player mostActivePlayer() throws PlayerNotFoundException {
-        return null;
+        if (this.mostActivePlayer == null) {
+            throw new PlayerNotFoundException();
+        }
+        return this.mostActivePlayer;
     }
 
     @Override

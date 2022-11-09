@@ -2,22 +2,22 @@ package uoc.ds.pr.model;
 
 public class OrganizingEntity {
 
-    private String id;
+    private int id;
     private String name;
 
     private String description;
 
-    public OrganizingEntity(String id, String name, String description) {
+    public OrganizingEntity(int id) {
         this.id = id;
         this.name = name;
         this.description = description;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
