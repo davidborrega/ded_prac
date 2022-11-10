@@ -10,7 +10,7 @@ public class File {
 
     private String eventId;
 
-    private String orgId;
+    private int orgId;
 
     private String description;
 
@@ -26,17 +26,18 @@ public class File {
 
     private LocalDate endDate;
 
-    public File(String fileId, String eventId, String orgId, String description,
+    public File(String fileId, String eventId, int orgId, String description,
                 SportEvents4Club.Type type, byte resources, double max, LocalDate startDate, LocalDate endDate) {
-        this.fileId = fileId;
-        this.eventId = eventId;
-        this.orgId = orgId;
-        this.description = description;
-        this.type = type;
-        this.resources = resources;
-        this.max = max;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.setFileId(fileId);
+        this.setEventId(eventId);
+        this.setOrgId(orgId);
+        this.setDescription(description);
+        this.setType(type);
+        this.setResources(resources);
+        this.setMax(max);
+        this.setStartDate(startDate);
+        this.setEndDate(endDate);
+        this.setStatus(SportEvents4Club.Status.PENDING);
     }
 
     public void setFileId(String fileId) {
@@ -47,11 +48,19 @@ public class File {
         return fileId;
     }
 
-    public void setOrgId(String orgId) {
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setOrgId(int orgId) {
         this.orgId = orgId;
     }
 
-    public String getOrgId() {
+    public int getOrgId() {
         return orgId;
     }
 

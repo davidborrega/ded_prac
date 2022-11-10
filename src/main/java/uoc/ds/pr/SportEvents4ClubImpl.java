@@ -1,5 +1,6 @@
 package uoc.ds.pr;
 
+import edu.uoc.ds.adt.sequential.QueueArrayImpl;
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.exceptions.*;
 import uoc.ds.pr.model.File;
@@ -14,13 +15,14 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     // Set array of players
     private Player players[];
     private int numberOfPlayers;
-
     // Set array of organizing entities
     private OrganizingEntity organizingEntities[];
     private int numberOfOrganizingEntities;
-
     // Set most active player
     private Player mostActivePlayer;
+    // Set files
+    private QueueArrayImpl files;
+    private int numberOfFiles;
 
     public SportEvents4ClubImpl() {
         // Initialize array of players
@@ -29,6 +31,11 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         // Initialize array of organizingEntities;
         this.organizingEntities = new OrganizingEntity[MAX_NUM_ORGANIZING_ENTITIES];
         this.numberOfOrganizingEntities = 0;
+        // Initialize most active player pointer.
+        this.mostActivePlayer = null;
+        // Initialize queue of files.
+        this.files = new QueueArrayImpl<>();
+        this.numberOfFiles = 0;
     }
 
     @Override
@@ -64,7 +71,14 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addFile(String id, String eventId, int orgId, String description, Type type, byte resources, int max, LocalDate startDate, LocalDate endDate) throws OrganizingEntityNotFoundException {
-
+        // Check if the organization exists, if not exists, throw custom error.
+        OrganizingEntity organizingEntity = getOrganizingEntity(orgId);
+        if (organizingEntity == null) {
+            throw new OrganizingEntityNotFoundException();
+        }
+        File file = new File(id, eventId, orgId, description, type, resources, max, startDate, endDate);
+        this.files.add(file);
+        this.numberOfFiles++;
     }
 
     @Override
@@ -122,17 +136,17 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public int numPlayers() {
-        return 0;
+        return this.players.length;
     }
 
     @Override
     public int numOrganizingEntities() {
-        return 0;
+        return this.organizingEntities.length;
     }
 
     @Override
     public int numFiles() {
-        return 0;
+        return this.files.size();
     }
 
     @Override
@@ -182,7 +196,10 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public OrganizingEntity getOrganizingEntity(int id) {
-        return null;
+        if (this.organizingEntities.length == 0) {
+            return null;
+        }
+        return this.organizingEntities[id];
     }
 
     @Override
