@@ -7,6 +7,7 @@ import uoc.ds.pr.model.File;
 import uoc.ds.pr.model.OrganizingEntity;
 import uoc.ds.pr.model.Player;
 import uoc.ds.pr.model.SportEvent;
+import uoc.ds.pr.util.OrderedVector;
 
 import java.time.LocalDate;
 
@@ -25,7 +26,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     private int numberOfFiles;
     private int numberOfRejectedFiles;
     // Set sport events
-
+    private OrderedVector<SportEvent> bestSportEvent;
 
     public SportEvents4ClubImpl() {
         // Initialize array of players
@@ -40,6 +41,8 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         this.files = new QueueArrayImpl<File>();
         this.numberOfFiles = 0;
         this.numberOfRejectedFiles = 0;
+        // Initialize sport events.
+        //this.bestSportEvent = new OrderedVector<SportEvent>(MAX_NUM_SPORT_EVENTS, comparator);
     }
 
     @Override
