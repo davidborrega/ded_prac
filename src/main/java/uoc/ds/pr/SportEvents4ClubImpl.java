@@ -21,8 +21,11 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     // Set most active player
     private Player mostActivePlayer;
     // Set files
-    private QueueArrayImpl files;
+    private QueueArrayImpl<File> files;
     private int numberOfFiles;
+    private double numberOfRejectedFiles;
+    // Set sport events
+
 
     public SportEvents4ClubImpl() {
         // Initialize array of players
@@ -34,8 +37,9 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         // Initialize most active player pointer.
         this.mostActivePlayer = null;
         // Initialize queue of files.
-        this.files = new QueueArrayImpl<>();
+        this.files = new QueueArrayImpl<File>();
         this.numberOfFiles = 0;
+        this.numberOfRejectedFiles = 0;
     }
 
     @Override
@@ -76,6 +80,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (organizingEntity == null) {
             throw new OrganizingEntityNotFoundException();
         }
+        // Prepare and add file object into queue of files.
         File file = new File(id, eventId, orgId, description, type, resources, max, startDate, endDate);
         this.files.add(file);
         this.numberOfFiles++;
@@ -83,6 +88,17 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public File updateFile(Status status, LocalDate date, String description) throws NoFilesException {
+        if (this.files.isEmpty()) {
+            throw new NoFilesException();
+        }
+        // Get first file of queue of files (using FIFO strategy) and remove it.
+        File file = this.files.poll();
+
+        if (status == Status.ENABLED) {
+            // Add new event into sport events.
+        } else if (status == Status.DISABLED) {
+            this.numberOfRejectedFiles++;
+        }
         return null;
     }
 
@@ -93,7 +109,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public double getRejectedFiles() {
-        return 0;
+        return this.numberOfRejectedFiles;
     }
 
     @Override
