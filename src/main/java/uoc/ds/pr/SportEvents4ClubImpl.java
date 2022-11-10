@@ -23,7 +23,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     // Set files
     private QueueArrayImpl<File> files;
     private int numberOfFiles;
-    private double numberOfRejectedFiles;
+    private int numberOfRejectedFiles;
     // Set sport events
 
 
@@ -147,6 +147,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public SportEvent bestSportEvent() throws SportEventNotFoundException {
+
         return null;
     }
 
@@ -167,12 +168,12 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public int numRejectedFiles() {
-        return 0;
+        return this.numberOfRejectedFiles;
     }
 
     @Override
     public int numPendingFiles() {
-        return 0;
+        return this.files.size();
     }
 
     @Override
@@ -202,6 +203,14 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Player getPlayer(String playerId) {
+        if (this.players.length == 0) {
+            return null;
+        }
+        for (int i = 0; i < this.players.length; i++) {
+            if (this.players[i].getId() == playerId) {
+                return this.players[i];
+            }
+        }
         return null;
     }
 
@@ -220,6 +229,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public File currentFile() {
-        return null;
+        return this.files.peek();
     }
 }
