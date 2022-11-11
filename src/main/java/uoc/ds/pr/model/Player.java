@@ -1,6 +1,7 @@
 package uoc.ds.pr.model;
 
 import edu.uoc.ds.adt.sequential.LinkedList;
+import edu.uoc.ds.traversal.Iterator;
 
 import java.time.LocalDate;
 
@@ -14,14 +15,14 @@ public class Player {
 
     private LocalDate dateOfBirth;
 
-    private LinkedList<SportEvent> events;
+    private LinkedList<SportEvent> sportEvents;
 
     public Player(String id, String name, String surname, LocalDate dateOfBirth) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.dateOfBirth = dateOfBirth;
-        this.events = new LinkedList<SportEvent>();
+        this.setId(id);
+        this.setName(name);
+        this.setSurname(surname);
+        this.setDateOfBirth(dateOfBirth);
+        this.sportEvents = new LinkedList<SportEvent>();
     }
 
     public void setId(String id) {
@@ -56,9 +57,15 @@ public class Player {
         return dateOfBirth;
     }
 
-    // TODO
-    public int numEvents() {
-        return this.events.size();
+    public void addSportEvent(SportEvent sportEvent) {
+        this.sportEvents.insertEnd(sportEvent);
     }
 
+    public int numEvents() {
+        return this.sportEvents.size();
+    }
+
+    public Iterator<SportEvent> getSportEvents() {
+        return this.sportEvents.values();
+    }
 }
