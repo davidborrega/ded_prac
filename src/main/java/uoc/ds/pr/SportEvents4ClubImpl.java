@@ -47,7 +47,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addPlayer(String id, String name, String surname, LocalDate dateOfBirth) throws LimitExceededException {
-        Player player =  this.getPlayer(id);
+        Player player = this.getPlayer(id);
         if (player == null) {
             if (this.numberOfPlayers >= MAX_NUM_PLAYER) {
                 throw new LimitExceededException();
@@ -79,7 +79,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     @Override
     public void addFile(String id, String eventId, int orgId, String description, Type type, byte resources, int max, LocalDate startDate, LocalDate endDate) throws OrganizingEntityNotFoundException {
         // Check if the organization exists, if not exists, throw custom error.
-        OrganizingEntity organizingEntity = getOrganizingEntity(orgId);
+        OrganizingEntity organizingEntity = this.getOrganizingEntity(orgId);
         if (organizingEntity == null) {
             throw new OrganizingEntityNotFoundException();
         }
@@ -124,12 +124,17 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             throw new PlayerNotFoundException();
         }
         if (sportEvent.isFull()) {
-            throw new LimitExceededException();
+            player.setSubstitute(true);
         }
         // New enrollment into sport event.
         sportEvent.addEnrollment(player);
         // add event into linked list of sport events player
         player.addSportEvent(sportEvent);
+
+        if (sportEvent.isFull()) {
+            throw new LimitExceededException();
+        }
+
         // update most active player
         if (this.mostActivePlayer == null || (this.mostActivePlayer.numEvents() < player.numEvents())) {
             this.mostActivePlayer = player;
@@ -143,7 +148,11 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Iterator<SportEvent> getSportEventsByOrganizingEntity(int organizationId) throws NoSportEventsException {
-        return null;
+        OrganizingEntity organizingEntity = this.getOrganizingEntity(organizationId);
+        if (organizingEntity == null) {
+            throw new NoSportEventsException();
+        }
+        return organizingEntity.getSportEvents();
     }
 
     @Override
@@ -198,7 +207,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public int numPlayers() {
-        return this.players.length;
+        return this.numberOfPlayers;
     }
 
     @Override
@@ -253,20 +262,26 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             // TODO: Should be throw new OrganizingEntityNotFound
             return 0;
         }
-        return organizingEntity.getSportEvents().size();
+        return organizingEntity.numEvents();
     }
 
     @Override
     public int numSubstitutesBySportEvent(String sportEventId) {
-        return 0;
+        SportEvent sportEvent = this.getSportEvent(sportEventId);
+        if (sportEvent == null) {
+            // TODO: Should be throw new SportEventNotFound
+            return 0;
+        }
+        return sportEvent.getTotalSubstitutes();
     }
 
     @Override
     public Player getPlayer(String playerId) {
-        if (this.players.length == 0) {
-            return null;
-        }
         for (int i = 0; i < this.players.length; i++) {
+            // If next position of players vector is null, break process and return null
+            if (this.players[i] == null) {
+                break;
+            }
             if (this.players[i].getId() == playerId) {
                 return this.players[i];
             }

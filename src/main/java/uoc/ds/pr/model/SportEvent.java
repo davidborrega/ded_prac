@@ -1,12 +1,12 @@
 package uoc.ds.pr.model;
 
+import edu.uoc.ds.adt.sequential.LinkedList;
 import edu.uoc.ds.adt.sequential.QueueArrayImpl;
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.SportEvents4Club;
 
 import java.time.LocalDate;
 import java.util.Comparator;
-import java.util.LinkedList;
 
 public class SportEvent {
 
@@ -22,9 +22,11 @@ public class SportEvent {
 
     private LocalDate endDate;
 
-    private QueueArrayImpl<Enrollment> enrollments;
+    private QueueArrayImpl<Player> enrollments;
 
-    private LinkedList<uoc.ds.pr.model.Rating> ratings;
+    private QueueArrayImpl<Player> substitutes;
+
+    private LinkedList<Rating> ratings;
 
     public SportEvent(String eventId, int orgId, String description, double max, LocalDate startDate, LocalDate endDate) {
         this.setEventId(eventId);
@@ -33,8 +35,8 @@ public class SportEvent {
         this.setMax(max);
         this.setStartDate(startDate);
         this.setEndDate(endDate);
-        this.ratings = new LinkedList<uoc.ds.pr.model.Rating>();
-        this.enrollments = new QueueArrayImpl<Enrollment>();
+        this.ratings = new LinkedList<Rating>();
+        this.enrollments = new QueueArrayImpl<Player>();
     }
     public void setEventId(String eventId) {
         this.eventId = eventId;
@@ -86,7 +88,7 @@ public class SportEvent {
     }
 
     public Iterator<uoc.ds.pr.model.Rating> getRatings() {
-        return (Iterator<Rating>) this.ratings.descendingIterator();
+        return this.ratings.values();
     }
 
     public int getTotalRatings() {
@@ -94,11 +96,25 @@ public class SportEvent {
     }
 
     public void addEnrollment(Player player) {
-        this.enrollments.add(new Enrollment(player));
+        this.enrollments.add(player);
+    }
+
+    public Iterator<Player> getEnrollments() {
+        return this.enrollments.values();
     }
 
     public int getTotalEnrollments() {
         return this.enrollments.size();
+    }
+
+    public int getTotalSubstitutes() {
+        int substitutes = 0;
+        for (Iterator<Player> it = this.getEnrollments(); it.hasNext();) {
+            if (it.next().isSubstitute()) {
+                substitutes++;
+            }
+        }
+        return substitutes;
     }
 
     public boolean isFull() {

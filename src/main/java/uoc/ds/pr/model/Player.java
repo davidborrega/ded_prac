@@ -17,12 +17,15 @@ public class Player {
 
     private LinkedList<SportEvent> sportEvents;
 
+    private boolean substitute;
+
     public Player(String id, String name, String surname, LocalDate dateOfBirth) {
         this.setId(id);
         this.setName(name);
         this.setSurname(surname);
         this.setDateOfBirth(dateOfBirth);
         this.sportEvents = new LinkedList<SportEvent>();
+        this.substitute = false;
     }
 
     public void setId(String id) {
@@ -55,6 +58,14 @@ public class Player {
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public void setSubstitute(boolean substitute) {
+        this.substitute = substitute;
+    }
+
+    public boolean isSubstitute() {
+        return this.substitute;
     }
 
     public void addSportEvent(SportEvent sportEvent) {

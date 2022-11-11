@@ -1,6 +1,10 @@
 package uoc.ds.pr.model;
 
-import java.util.LinkedList;
+import edu.uoc.ds.adt.helpers.Position;
+import edu.uoc.ds.adt.sequential.LinkedList;
+import edu.uoc.ds.traversal.Iterator;
+
+
 
 public class OrganizingEntity {
 
@@ -44,11 +48,15 @@ public class OrganizingEntity {
     }
 
     public void addSportEvent(SportEvent sportEvent) {
-        this.sportEvents.addLast(sportEvent);
+        this.sportEvents.insertEnd(sportEvent);
     }
 
-    public LinkedList<SportEvent> getSportEvents() {
-        return this.sportEvents;
+    public Iterator<SportEvent> getSportEvents() {
+        return this.sportEvents.values();
+    }
+
+    public int numEvents() {
+        return this.sportEvents.size();
     }
 
 }
