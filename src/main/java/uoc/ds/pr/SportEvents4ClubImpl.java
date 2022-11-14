@@ -224,7 +224,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (this.bestSportEvents.size() == 0) {
             throw new SportEventNotFoundException();
         }
-        return this.bestSportEvents.get(0);
+        return this.bestSportEvents.get(this.bestSportEvents.size()-1);
     }
 
     @Override
