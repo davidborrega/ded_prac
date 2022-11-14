@@ -42,7 +42,7 @@ public class OrderedVector<E> implements FiniteContainer<E> {
 
     // Get element by position
     public E get(int position) {
-        if (position == 0 || position >= this.numberOfElements) {
+        if (position < 0 || position >= this.numberOfElements) {
             return null;
         }
         return this.elements[position];

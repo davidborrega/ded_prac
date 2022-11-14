@@ -134,7 +134,15 @@ public class SportEvent {
     };
 
     public Double rating() {
-        return Double.valueOf(0);
+        int numberOfRatings = this.getTotalRatings();
+        if (numberOfRatings == 0) {
+            return Double.valueOf(0);
+        }
+        int rating = 0;
+        for (Iterator<Rating> it = this.getRatings(); it.hasNext();) {
+            rating += it.next().rating().getValue();
+        }
+        return Double.valueOf(rating/numberOfRatings);
     }
 
 }
