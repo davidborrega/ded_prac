@@ -109,10 +109,8 @@ public class SportEvent {
 
     public int getTotalSubstitutes() {
         int substitutes = 0;
-        for (Iterator<Player> it = this.getEnrollments(); it.hasNext();) {
-            if (it.next().isSubstitute()) {
-                substitutes++;
-            }
+        if (this.enrollments.size() > SportEvents4Club.MAX_NUM_ENROLLMENT) {
+            substitutes = this.enrollments.size() - SportEvents4Club.MAX_NUM_ENROLLMENT;
         }
         return substitutes;
     }

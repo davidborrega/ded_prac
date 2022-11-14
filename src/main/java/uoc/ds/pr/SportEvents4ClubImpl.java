@@ -63,7 +63,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addOrganizingEntity(int id, String name, String description) throws LimitExceededException {
-        OrganizingEntity organizingEntity = new OrganizingEntity(id, name, description);
+        OrganizingEntity organizingEntity = this.getOrganizingEntity(id);
         if (organizingEntity == null) {
             if (this.numberOfOrganizingEntities >= MAX_NUM_ORGANIZING_ENTITIES) {
                 throw new LimitExceededException();
@@ -123,9 +123,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (player == null) {
             throw new PlayerNotFoundException();
         }
-        if (sportEvent.isFull()) {
-            player.setSubstitute(true);
-        }
+
         // New enrollment into sport event.
         sportEvent.addEnrollment(player);
         // add event into linked list of sport events player
@@ -150,6 +148,9 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     public Iterator<SportEvent> getSportEventsByOrganizingEntity(int organizationId) throws NoSportEventsException {
         OrganizingEntity organizingEntity = this.getOrganizingEntity(organizationId);
         if (organizingEntity == null) {
+            throw new NoSportEventsException();
+        }
+        if (organizingEntity.numEvents() == 0) {
             throw new NoSportEventsException();
         }
         return organizingEntity.getSportEvents();
@@ -212,12 +213,12 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public int numOrganizingEntities() {
-        return this.organizingEntities.length;
+        return this.numberOfOrganizingEntities;
     }
 
     @Override
     public int numFiles() {
-        return this.files.size();
+        return this.numberOfFiles;
     }
 
     @Override
@@ -277,11 +278,8 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Player getPlayer(String playerId) {
-        for (int i = 0; i < this.players.length; i++) {
+        for (int i = 0; i < this.numberOfPlayers; i++) {
             // If next position of players vector is null, break process and return null
-            if (this.players[i] == null) {
-                break;
-            }
             if (this.players[i].getId() == playerId) {
                 return this.players[i];
             }
@@ -296,10 +294,12 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public OrganizingEntity getOrganizingEntity(int id) {
-        if (this.organizingEntities.length == 0) {
-            return null;
+        for (int i = 0; i < this.numberOfOrganizingEntities; i++) {
+            if (this.organizingEntities[i].getId() == id) {
+                return this.organizingEntities[i];
+            }
         }
-        return this.organizingEntities[id];
+        return null;
     }
 
     @Override
