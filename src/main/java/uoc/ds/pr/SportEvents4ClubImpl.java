@@ -99,7 +99,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (status == Status.ENABLED) {
             // Add new event into sport events.
             SportEvent sportEvent = new SportEvent(file.getEventId(), file.getOrgId(), file.getDescription(),
-                    MAX_NUM_ENROLLMENT, file.getStartDate(), file.getEndDate());
+                    file.getMax(), file.getStartDate(), file.getEndDate());
             this.sportEvents.put(file.getEventId(), sportEvent);
             // Add new event into best sport events vector.
             this.bestSportEvents.add(sportEvent);
@@ -115,10 +115,12 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void signUpEvent(String playerId, String eventId) throws PlayerNotFoundException, SportEventNotFoundException, LimitExceededException {
+        // Get sport event by id.
         SportEvent sportEvent = this.getSportEvent(eventId);
         if (sportEvent == null) {
             throw new SportEventNotFoundException();
         }
+        // Get player by id.
         Player player = this.getPlayer(playerId);
         if (player == null) {
             throw new PlayerNotFoundException();
@@ -141,7 +143,8 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public double getRejectedFiles() {
-        return this.numberOfRejectedFiles;
+        // Get the percentage between number of rejected files with total of files.
+        return (double) this.numRejectedFiles()/ (double) this.numFiles();
     }
 
     @Override
@@ -175,7 +178,25 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addRating(String playerId, String eventId, Rating rating, String message) throws SportEventNotFoundException, PlayerNotFoundException, PlayerNotInSportEventException {
-
+        // Get sport event from the ordered vector...
+        SportEvent sportEvent = this.getSportEvent(eventId);
+        if (sportEvent == null) {
+            throw new SportEventNotFoundException();
+        }
+        // Get player by id
+        Player player = this.getPlayer(playerId);
+        if (player == null) {
+            throw new PlayerNotFoundException();
+        }
+        // Check if player has participated in sport event or not
+        if (!player.hasParticipatedInEvent(sportEvent)) {
+            throw new PlayerNotInSportEventException();
+        }
+        // create new rating and add into sport event.
+        uoc.ds.pr.model.Rating newRating = new uoc.ds.pr.model.Rating(player, eventId, rating, message);
+        sportEvent.addRating(newRating);
+        // reorder best sport events vector.
+        this.bestSportEvents.update(sportEvent);
     }
 
     @Override

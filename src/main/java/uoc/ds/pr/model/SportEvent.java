@@ -24,8 +24,6 @@ public class SportEvent {
 
     private QueueArrayImpl<Player> enrollments;
 
-    private QueueArrayImpl<Player> substitutes;
-
     private LinkedList<Rating> ratings;
 
     public SportEvent(String eventId, int orgId, String description, double max, LocalDate startDate, LocalDate endDate) {
@@ -99,24 +97,24 @@ public class SportEvent {
         this.enrollments.add(player);
     }
 
-    public Iterator<Player> getEnrollments() {
-        return this.enrollments.values();
-    }
-
     public int getTotalEnrollments() {
         return this.enrollments.size();
     }
 
+    public void addRating(Rating rating) {
+        this.ratings.insertEnd(rating);
+    }
+
     public int getTotalSubstitutes() {
         int substitutes = 0;
-        if (this.enrollments.size() > SportEvents4Club.MAX_NUM_ENROLLMENT) {
-            substitutes = this.enrollments.size() - SportEvents4Club.MAX_NUM_ENROLLMENT;
+        if (this.getTotalEnrollments() > this.getMax()) {
+            substitutes = (int) (this.getTotalEnrollments() - this.getMax());
         }
         return substitutes;
     }
 
     public boolean isFull() {
-        return this.getTotalEnrollments() >= SportEvents4Club.MAX_NUM_ENROLLMENT;
+        return this.getTotalEnrollments() > this.getMax();
     }
 
     public static Comparator<String> COMPARATOR = new Comparator<String>() {
@@ -142,7 +140,7 @@ public class SportEvent {
         for (Iterator<Rating> it = this.getRatings(); it.hasNext();) {
             rating += it.next().rating().getValue();
         }
-        return Double.valueOf(rating/numberOfRatings);
+        return (double) rating / (double) numberOfRatings;
     }
 
 }
