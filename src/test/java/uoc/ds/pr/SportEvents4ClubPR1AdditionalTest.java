@@ -6,10 +6,10 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import uoc.ds.pr.exceptions.DSException;
-import uoc.ds.pr.exceptions.LimitExceededException;
-import uoc.ds.pr.exceptions.NoFilesException;
-import uoc.ds.pr.exceptions.OrganizingEntityNotFoundException;
+import uoc.ds.pr.exceptions.*;
+import uoc.ds.pr.model.Player;
+import uoc.ds.pr.model.Rating;
+import uoc.ds.pr.model.SportEvent;
 
 import java.time.LocalDate;
 
@@ -36,13 +36,13 @@ public class SportEvents4ClubPR1AdditionalTest {
     public void testAddPlayerLimitExceeded() throws LimitExceededException {
         for (int i = this.sportEvents4Club.numPlayers(); i < SportEvents4Club.MAX_NUM_PLAYER; i++) {
             this.sportEvents4Club.addPlayer("User " + i, this.getRandomString(25),
-                    this.getRandomString(100), LocalDate.of(1970,1,1));
+                this.getRandomString(100), LocalDate.of(1970,1,1));
         }
         Assert.assertEquals(this.sportEvents4Club.numPlayers(), SportEvents4Club.MAX_NUM_PLAYER);
         Assert.assertThrows(LimitExceededException.class, ()->
                 this.sportEvents4Club.addPlayer("User " + this.sportEvents4Club.numPlayers() + 1,
-                        this.getRandomString(25), this.getRandomString(100),
-                        LocalDate.of(1970,1,1))
+                    this.getRandomString(25), this.getRandomString(100),
+                    LocalDate.of(1970,1,1))
         );
     }
 
@@ -51,12 +51,12 @@ public class SportEvents4ClubPR1AdditionalTest {
     public void testAddOrganizingEntityLimitExceeded() throws LimitExceededException {
         for (int i = this.sportEvents4Club.numOrganizingEntities(); i < SportEvents4Club.MAX_NUM_ORGANIZING_ENTITIES; i++) {
             this.sportEvents4Club.addOrganizingEntity(i+20, this.getRandomString(120),
-                    this.getRandomString(255));
+                this.getRandomString(255));
         }
         Assert.assertEquals(this.sportEvents4Club.numOrganizingEntities(), SportEvents4Club.MAX_NUM_ORGANIZING_ENTITIES);
         Assert.assertThrows(LimitExceededException.class, ()->
-                this.sportEvents4Club.addOrganizingEntity(this.sportEvents4Club.numOrganizingEntities() + 1,
-                        this.getRandomString(120), this.getRandomString(255))
+            this.sportEvents4Club.addOrganizingEntity(this.sportEvents4Club.numOrganizingEntities() + 1,
+                this.getRandomString(120), this.getRandomString(255))
         );
     }
 
@@ -65,11 +65,11 @@ public class SportEvents4ClubPR1AdditionalTest {
     public void testAddFileOrganizingEntityNotFound() {
         Assert.assertTrue(this.sportEvents4Club.numOrganizingEntities() > 0);
         Assert.assertThrows(OrganizingEntityNotFoundException.class, ()->
-                this.sportEvents4Club.addFile("100", "TEST-EVENT", OE_NOT_FOUND,
-                        this.getRandomString(255), SportEvents4Club.Type.SMALL,
-                        SportEvents4Club.FLAG_ALL_OPTS, 100, LocalDate.of(2022, 1, 1),
-                        LocalDate.of(2022, 11, 15)
-                        )
+            this.sportEvents4Club.addFile("100", "TEST-EVENT", OE_NOT_FOUND,
+                this.getRandomString(255), SportEvents4Club.Type.SMALL,
+                SportEvents4Club.FLAG_ALL_OPTS, 100, LocalDate.of(2022, 1, 1),
+                LocalDate.of(2022, 11, 15)
+            )
         );
     }
 
@@ -90,25 +90,94 @@ public class SportEvents4ClubPR1AdditionalTest {
         for (int i = 0; i < SportEvents4Club.MAX_NUM_SPORT_EVENTS; i++) {
             // Create new file
             this.newApp.addFile("'" + i + "'", "TEST-EVENT-" + i, orgId,
-                    this.getRandomString(255), SportEvents4Club.Type.SMALL,
-                    SportEvents4Club.FLAG_ALL_OPTS, 100, LocalDate.of(2022, 1, 1),
-                    LocalDate.of(2022, 11, 15)
+                this.getRandomString(255), SportEvents4Club.Type.SMALL,
+                SportEvents4Club.FLAG_ALL_OPTS, 100, LocalDate.of(2022, 1, 1),
+                LocalDate.of(2022, 11, 15)
             );
             // Aprove file and add new sport event for each iterate.
             this.newApp.updateFile(SportEvents4Club.Status.ENABLED,
-                    LocalDate.of(2022, 1, 1), this.getRandomString(255));
+                LocalDate.of(2022, 1, 1), this.getRandomString(255));
         }
 
         // Try to force exception creating new sport event.
         this.newApp.addFile("'" + (this.newApp.numFiles()+1) + "'", "TEST-EVENT-" + (this.newApp.numFiles()+1), orgId,
-                this.getRandomString(255), SportEvents4Club.Type.SMALL,
-                SportEvents4Club.FLAG_ALL_OPTS, 100, LocalDate.of(2022, 1, 1),
-                LocalDate.of(2022, 11, 15)
+            this.getRandomString(255), SportEvents4Club.Type.SMALL,
+            SportEvents4Club.FLAG_ALL_OPTS, 100, LocalDate.of(2022, 1, 1),
+            LocalDate.of(2022, 11, 15)
         );
         Assert.assertThrows(FullContainerException.class, ()->
-                this.newApp.updateFile(SportEvents4Club.Status.ENABLED,
-                        LocalDate.of(2022, 1, 1), this.getRandomString(255))
+            this.newApp.updateFile(SportEvents4Club.Status.ENABLED,
+            LocalDate.of(2022, 1, 1), this.getRandomString(255))
         );
+    }
+
+    // This method check if exists sport event for add new rating
+    @Test
+    public void testAddRatingSportEventNotFound() {
+        Assert.assertThrows(SportEventNotFoundException.class, () ->
+            this.sportEvents4Club.addRating("playerRandom", "eventRandom",
+                SportEvents4Club.Rating.FIVE, this.getRandomString(40))
+        );
+    }
+
+    // This method check if exists player for add new rating
+    @Test
+    public void testAddRatingPlayerNotFound() throws DSException {
+        SportEvent sportEvent = this.sportEvents4Club.bestSportEvent();
+        Assert.assertThrows(PlayerNotFoundException.class, () ->
+                this.sportEvents4Club.addRating("playerRandom", sportEvent.getEventId(),
+                        SportEvents4Club.Rating.FIVE, this.getRandomString(40))
+        );
+    }
+
+    // This method check if exists player in event for add new rating
+    @Test
+    public void testAddRatingPlayerNotInSportEventException() throws DSException {
+        // Get event from player 1
+        Player player1 = this.sportEvents4Club.getPlayer("idPlayer1");
+        Assert.assertEquals("EV-1101", player1.getSportEvents().next().getEventId());
+        // Get event from player 2
+        Player player2 = this.sportEvents4Club.getPlayer("idPlayer2");
+        Assert.assertEquals("EV-1102", player2.getSportEvents().next().getEventId());
+        // Cross data to throw PlayerNotInSportEventException
+        Assert.assertThrows(PlayerNotInSportEventException.class, () ->
+                this.sportEvents4Club.addRating("idPlayer1", "EV-1102",
+                        SportEvents4Club.Rating.FIVE, this.getRandomString(40))
+        );
+    }
+
+    // This method check if exists event in order to get ratings
+    @Test
+    public void testGetRatingsSportEventNotFound() {
+        Assert.assertThrows(SportEventNotFoundException.class, () ->
+            this.sportEvents4Club.getRatingsByEvent("eventNotFound")
+        );
+    }
+
+    // This method check if exists most active player
+    @Test
+    public void testMostActivePlayerWithPlayerNotFound() {
+        Assert.assertThrows(PlayerNotFoundException.class, () ->
+                this.newApp.mostActivePlayer()
+        );
+    }
+
+    // This method check if exists sport events into best sport events vector
+    @Test
+    public void testBestSportEventWithSportEventNotFoundException() {
+        Assert.assertThrows(SportEventNotFoundException.class, () ->
+                this.newApp.bestSportEvent()
+        );
+    }
+
+    @Test
+    public void testSignUpEventPlayerNotFound() {
+
+    }
+
+    @Test
+    public void testSignUpEventSportEventNotFound() {
+
     }
 
     private String getRandomString(int size) {
