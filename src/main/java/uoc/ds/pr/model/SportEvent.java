@@ -105,6 +105,9 @@ public class SportEvent {
         this.ratings.insertEnd(rating);
     }
 
+    /* This method returns total of substitutes. 
+        To calculate the substitutes we have to know the maximum number of enrollments to this sport event and the current number of enrollments.
+    */
     public int getTotalSubstitutes() {
         int substitutes = 0;
         if (this.getTotalEnrollments() > this.getMax()) {
@@ -131,6 +134,7 @@ public class SportEvent {
         }
     };
 
+    // This method returns the average rating for this event.
     public Double rating() {
         int numberOfRatings = this.getTotalRatings();
         if (numberOfRatings == 0) {

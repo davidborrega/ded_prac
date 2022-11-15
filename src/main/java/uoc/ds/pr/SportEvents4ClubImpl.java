@@ -47,14 +47,18 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addPlayer(String id, String name, String surname, LocalDate dateOfBirth) throws LimitExceededException {
+        // Get the player from current array of players.
         Player player = this.getPlayer(id);
         if (player == null) {
+            // If current array of players have the maximum number, throw custom exception.
             if (this.numberOfPlayers >= MAX_NUM_PLAYER) {
                 throw new LimitExceededException();
             }
+            // Save into array of players the new player element and increase player counter.
             this.players[numberOfPlayers] = new Player(id, name, surname, dateOfBirth);
             this.numberOfPlayers++;
         } else {
+            // Update data.
             player.setName(name);
             player.setSurname(surname);
             player.setDateOfBirth(dateOfBirth);
@@ -63,14 +67,18 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addOrganizingEntity(int id, String name, String description) throws LimitExceededException {
+        // Get the organizing entity from current array of organizing entities.
         OrganizingEntity organizingEntity = this.getOrganizingEntity(id);
         if (organizingEntity == null) {
+            // If current array of organizing entities have the maximum number, throw custom exception.
             if (this.numberOfOrganizingEntities >= MAX_NUM_ORGANIZING_ENTITIES) {
                 throw new LimitExceededException();
             }
+            // Save into array of organizing entities the new player element and increase the counter.
             this.organizingEntities[numberOfOrganizingEntities] = new OrganizingEntity(id, name, description);
             this.numberOfOrganizingEntities++;
         } else {
+            // Update data
             organizingEntity.setName(name);
             organizingEntity.setDescription(description);
         }
@@ -162,6 +170,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     @Override
     public Iterator<SportEvent> getAllEvents() throws NoSportEventsException {
         if (this.sportEvents.size() == 0) {
+            // If sport event not found, throw custom exception.
             throw new NoSportEventsException();
         }
         return this.sportEvents.values();
@@ -171,6 +180,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     public Iterator<SportEvent> getEventsByPlayer(String playerId) throws NoSportEventsException {
         Player player = this.getPlayer(playerId);
         if ((player == null) || (player.numEvents() == 0)) {
+            // If player not found, throw custom exception.
             throw new NoSportEventsException();
         }
         return player.getSportEvents();
@@ -178,24 +188,26 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addRating(String playerId, String eventId, Rating rating, String message) throws SportEventNotFoundException, PlayerNotFoundException, PlayerNotInSportEventException {
-        // Get sport event from the ordered vector...
+        // Get sport event from the ordered vector
         SportEvent sportEvent = this.getSportEvent(eventId);
         if (sportEvent == null) {
+            // If sport event not found, throw custom exception.
             throw new SportEventNotFoundException();
         }
         // Get player by id
         Player player = this.getPlayer(playerId);
         if (player == null) {
+            // If player not found, throw custom exception.
             throw new PlayerNotFoundException();
         }
         // Check if player has participated in sport event or not
         if (!player.hasParticipatedInEvent(sportEvent)) {
             throw new PlayerNotInSportEventException();
         }
-        // create new rating and add into sport event.
+        // Create new rating and add into sport event.
         uoc.ds.pr.model.Rating newRating = new uoc.ds.pr.model.Rating(player, eventId, rating, message);
         sportEvent.addRating(newRating);
-        // reorder best sport events vector.
+        // Reorder best sport events vector.
         this.bestSportEvents.update(sportEvent);
     }
 
@@ -203,9 +215,11 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     public Iterator<uoc.ds.pr.model.Rating> getRatingsByEvent(String eventId) throws SportEventNotFoundException, NoRatingsException {
         SportEvent sportEvent = this.getSportEvent(eventId);
         if (sportEvent == null) {
+            // If sport event not found, throw custom exception.
             throw new SportEventNotFoundException();
         }
         if (sportEvent.getTotalRatings() == 0) {
+            // If not ratings found, throw custom exception.
             throw  new NoRatingsException();
         }
         return sportEvent.getRatings();
@@ -214,6 +228,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     @Override
     public Player mostActivePlayer() throws PlayerNotFoundException {
         if (this.mostActivePlayer == null) {
+            // If player not found, throw custom exception.
             throw new PlayerNotFoundException();
         }
         return this.mostActivePlayer;
@@ -222,6 +237,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     @Override
     public SportEvent bestSportEvent() throws SportEventNotFoundException {
         if (this.bestSportEvents.size() == 0) {
+            // If sport event not found, throw custom exception.
             throw new SportEventNotFoundException();
         }
         return this.bestSportEvents.get(this.bestSportEvents.size()-1);
@@ -325,6 +341,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public File currentFile() {
+        // Get element of queue using FIFO algorythm.
         return this.files.peek();
     }
 }
