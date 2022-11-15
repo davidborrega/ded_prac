@@ -55,7 +55,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
                 throw new LimitExceededException();
             }
             // Save into array of players the new player element and increase player counter.
-            this.players[numberOfPlayers] = new Player(id, name, surname, dateOfBirth);
+            this.players[this.numberOfPlayers] = new Player(id, name, surname, dateOfBirth);
             this.numberOfPlayers++;
         } else {
             // Update data.
@@ -75,7 +75,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
                 throw new LimitExceededException();
             }
             // Save into array of organizing entities the new player element and increase the counter.
-            this.organizingEntities[numberOfOrganizingEntities] = new OrganizingEntity(id, name, description);
+            this.organizingEntities[this.numberOfOrganizingEntities] = new OrganizingEntity(id, name, description);
             this.numberOfOrganizingEntities++;
         } else {
             // Update data
