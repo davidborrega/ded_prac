@@ -3,7 +3,8 @@
   
 ## Autor
 
-David Borrega Borrella
+**David Borrega Borrella**
+Enginyeria Informàtica - Curs 2022/2023 Tardor.
 
 ## Introducció
 
@@ -24,6 +25,10 @@ Tota la implementació s'ha realizat conforme la signatura inicial de la interf�
 El projecte s'estructura en dues principals parts:
 
  - **src**: estructura principal del projecte.
+	 - *excepcions*: directori que llista les diferents excepcions del projecte (per a més detall, veure apartat *Excepcions*).
+	 - *model*: directori que llista totes les entitats que s'inclouen en el projecte (per a més detall, veure apartat *Models*).
+	 - *util*: directori que llista les diferents utilitats utilitzades en l'aplicació. Inclou les noves TAD implementades.
+	 
  - **test**: estructura del joc de proves.
   
 
@@ -67,7 +72,18 @@ D'una altra, s'han creat nous TAD:
 
 
 ### Excepcions
-
+S'han implementat diferents excepcions per a satisfer els requeriments de la definició inicial de la interfície ***Sport4EventsClub**. Totes elles, extenen d'una excepció principal anomenada ***DSException***:
+```
+DSException
+├── LimitExceededException
+├── NoFilesException
+├── NoRatingsException
+├── NoSportEventsException
+├── OrganizingEntityNotFoundException
+├── PlayerNotFoundException
+├── PlayerNotInSportEventException
+├── SportEventNotFoundException
+```
   
 ## Change Log
   
