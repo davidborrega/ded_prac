@@ -85,7 +85,7 @@ DSException
 ├── SportEventNotFoundException
 ```
   
-## Modificacions
+## Modificacions / Actualitzacions
 
 ### SportEvents4ClubImpl
  - Per tal de poder satisfer les necessitats de la definició inicial, s'han generat nous TADS (*veure apartat Tipus de TADS utilitzats per a més detall*).
@@ -94,6 +94,9 @@ DSException
      -   *numberOfOrganizingEntities*: número d'entitats organitzadores que s'han afegit en el sistema.
      -   *numberOfFiles*: número de fitxes pendents d'aprovar que s'han afegit en el sistema.
      -   *numberOfRejectedFiles*: número de fitxes rebutjades que s'han afegit en el sistema.
+### SportEvent
+Per tal de gestionar la ordenació dels diferents TADs utilitzats per als esdeveniments esportius.
+
   
 ## Joc de proves
 
