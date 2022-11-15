@@ -85,7 +85,15 @@ DSException
 ├── SportEventNotFoundException
 ```
   
-## Change Log
+## Modificacions
+
+### SportEvents4ClubImpl
+ - Per tal de poder satisfer les necessitats de la definició inicial, s'han generat nous TADS (*veure apartat Tipus de TADS utilitzats per a més detall*).
+ - Per a poder gestionar el número d'elements existents en cada un dels TAD que s'utilitzen en la implementació (dit d'altre manera, *contador d'elements*), es fan servir variables de tipus ***int*** per al control:
+     -   *numberOfPlayers*: número de jugadors que s'han afegit en el sistema.
+     -   *numberOfOrganizingEntities*: número d'entitats organitzadores que s'han afegit en el sistema.
+     -   *numberOfFiles*: número de fitxes pendents d'aprovar que s'han afegit en el sistema.
+     -   *numberOfRejectedFiles*: número de fitxes rebutjades que s'han afegit en el sistema.
   
 ## Joc de proves
 
