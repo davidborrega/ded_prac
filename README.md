@@ -55,14 +55,22 @@ Emmagatzema una llista encadenada d'esdeveniments esportius.
  - Emmagatzema una llista encadenada de valoracions.
 
 ### Tipus de TADS utilitzats
-  
+  Per al desenvolupament correcte de la implementació **SportEvents4ClubImpl** és necessari utilitzar la llibreria de *TADS* que ofereix l'assignatura. 
+  Per una banda, s'utilitzen els següents TAD ja existents en la llibreria:
+   - **LinkedList** *<edu.uoc.ds.adt.sequential>*: per a la implementació de llistes encadenades.
+   - **QueryArrayImpl** <*edu.uoc.ds.adt.sequential*>: per a la implementació de les cues.
+
+D'una altra, s'han creat nous TAD:
+
+ - **OrderedVector** *<uoc.ds.pr.util>*: per a la implementació de vector ordenat per a gestionar els millors esdeveniments esportius. *Implementa els TAD: FiniteContainer.*
+ - **OrderedVectorDictionary** *<uoc.ds.pr.util>*: per a la implementació de vector ordenat per a gestionar els esdeveniments esportius. *Implementa els TAD: DictionaryArrayImpl, FiniteContainer.*
+
 
 ### Excepcions
 
   
-
-## Joc de proves
-
+## Change Log
   
+## Joc de proves
 
 ## Annex
