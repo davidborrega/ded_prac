@@ -205,8 +205,37 @@ Anem a detallar cada un dels jocs de proves:
  - ***mostActivePlayer***(*throws DSException*): comprova el jugador més participatiu del sistema.
  - ***addRatingAndBestEventTest***(*throws DSException*): comprova si es dóna d'alta una valoració en el vector ordenat per, posteriorment, comprovar si s'actualitza el vector ordenat de valoracions per la seva ponderació.
 
+### ResourceUtilTest
+Aquest joc de proves es basa en avaluar el nivell de permisos donat un paràmetre de tipus byte en el mètode *getFlag* de la classe d'utilitat ResourceUtil.
+Cada un dels casos de prova de **ResourceUtilTest** té definit un número de paràmetres d'entrada diferent. Els casos són els següents:
+
+- ***hasFlagTest1***
+- ***hasFlagTest2***
+- ***hasFlagTest3***
+- ***hasFlagTest4***
+
+ Addicionalment, s'ha creat una nova classe per al joc de proves adicionals sobre la implementació de **SportEvents4ClubImpl**, on s'han realitzat totes aquelles proves adicionals que no s'han contemplat en el joc de proves inicial.
+
+ ### SportEvents4ClubPR1AdditionalTest:
+- ***testAddPlayerLimitExceeded*** (*throws LimitExceededException*): comprova si hi ha excés de jugadors en el vector a l'hora de fer el alta.
+- ***testAddOrganizingEntityLimitExceeded*** (*throws LimitExceededException*): comprova si hi ha excés d'entitats organitzatives en el vector a l'hora de fer el alta.
+- ***testAddFileOrganizingEntityNotFound***: comprova si existeix l'entitat organitzativa a l'hora de fer l'alta.
+- ***testUpdateFileFilesNotFound***: comprova si pot tractar fitxes en el cas que no hi hagin donades d'alta
+- ***testAddSportEventFullContainer*** (*throws LimitExceededException*): comprova si hi ha excés en el vector ordenat d'esdeveniments esportius.
+- ***testAddRatingSportEventNotFound***: comprova si existeix esdeveniment esportiu a l'hora d'afegir una nova valoració.
+- ***testAddRatingPlayerNotFound*** (*throws LimitExceededException*): comprova si existeix jugador a l'hora d'afegir una nova valoració.
+- ***testAddRatingPlayerNotInSportEventException***: comprova si el jugador ha estat inscrit a un determinat esdeveniment a l'hora d'afegir una nova valoració.
+- ***testGetRatingsSportEventNotFound***: comprova si existeix esdeveniment esportiu a l'hora de retornar les valoracions.
+- ***testMostActivePlayerWithPlayerNotFound***: comprova si existeix jugadors en el vector per tal de mostrar el més participatiu.
+- ***testBestSportEventWithSportEventNotFoundException***: comprova si existeixen esdeveniments esportius en el vector ordenat de millor esdeveniment.
+- ***testSignUpEventPlayerNotFound***: comprova si existeix jugador a l'hora de fer la inscripció.
+- ***testSignUpEventSportEventNotFound***: comprova si existeix esdeveniment esportiu a l'hora de fer la inscripció.
+- ***testGetEventsByPlayerNoSportEventsFound***: comprova si existeixen esdeveniments esportius en el jugador.
+ 
+
 En el següent apartat s'inclouen diferents captures de pantalla referents al resultat dels diferents jocs de proves utilitzats.
 ## Annex
 ### Resultat dels jocs de proves:
  - /screenshoot/SportEvents4ClubPR1Test.jpg
+ - /screenshoot/SportEvents4ClubPR1AdditionalTest.jpg
  - /screnshoot/ResourceUtilTest.png

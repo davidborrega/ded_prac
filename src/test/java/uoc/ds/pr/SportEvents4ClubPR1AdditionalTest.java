@@ -132,7 +132,7 @@ public class SportEvents4ClubPR1AdditionalTest {
 
     // This method check if exists player in event for add new rating
     @Test
-    public void testAddRatingPlayerNotInSportEventException() throws DSException {
+    public void testAddRatingPlayerNotInSportEventException() {
         // Get event from player 1
         Player player1 = this.sportEvents4Club.getPlayer("idPlayer1");
         Assert.assertEquals("EV-1101", player1.getSportEvents().next().getEventId());
@@ -170,14 +170,28 @@ public class SportEvents4ClubPR1AdditionalTest {
         );
     }
 
+    // This method checks if exists player or not in order to sign up event.
     @Test
     public void testSignUpEventPlayerNotFound() {
-
+        Assert.assertThrows(PlayerNotFoundException.class, () ->
+                this.sportEvents4Club.signUpEvent("randomPlayerNotFound", "EV-1101")
+        );
     }
 
+    // This method checks if exists sport event or not in order to sign up event.
     @Test
     public void testSignUpEventSportEventNotFound() {
+        Assert.assertThrows(SportEventNotFoundException.class, () ->
+                this.sportEvents4Club.signUpEvent("idPlayer1", "randomEventNotFound")
+        );
+    }
 
+    // This method checks if exists sport event in player
+    @Test
+    public void testGetEventsByPlayerNoSportEventsFound() {
+        Assert.assertThrows(NoSportEventsException.class, () ->
+                this.sportEvents4Club.getEventsByPlayer("idPlayer12")
+        );
     }
 
     private String getRandomString(int size) {
