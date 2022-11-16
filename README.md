@@ -231,7 +231,15 @@ Cada un dels casos de prova de **ResourceUtilTest** té definit un número de pa
 - ***testSignUpEventPlayerNotFound***: comprova si existeix jugador a l'hora de fer la inscripció.
 - ***testSignUpEventSportEventNotFound***: comprova si existeix esdeveniment esportiu a l'hora de fer la inscripció.
 - ***testGetEventsByPlayerNoSportEventsFound***: comprova si existeixen esdeveniments esportius en el jugador.
- 
+
+En quant a la implementació del TAD de vector ordenat, s'ha preparat un joc de proves adicionals a la classe de prova **OrderedVectorTest**.
+ ### OrderedVectorTest:
+-***testAddandIsFull***: comprova quan es dona d'alta un element i si ha excés.
+-***testIsEmpty***: comprova si el vector està buit o no.
+-***testGetElementSizeAndValues***: comprova el tamany del vector.
+-***testCheckInAlphabeticOrder***: comprova que es realitzi la ordenació alfabètica en l'alta d'elements en el vector.
+-***testUpdateAndCheckInAlphabeticOrder***: comprova que es realitzi la ordenació alfabètica en l'update d'elements en el vector.
+-***testDeleteAndCheckOrder***: comprova que es realitzi la ordenació alfabètica en la baixa d'elements en el vector.
 
 En el següent apartat s'inclouen diferents captures de pantalla referents al resultat dels diferents jocs de proves utilitzats.
 ## Annex
@@ -239,3 +247,5 @@ En el següent apartat s'inclouen diferents captures de pantalla referents al re
  - /screenshoot/SportEvents4ClubPR1Test.jpg
  - /screenshoot/SportEvents4ClubPR1AdditionalTest.jpg
  - /screnshoot/ResourceUtilTest.png
+ - /screenshoot/OrderedVectorTest.png
+ - /screenshoot/AllTest.png

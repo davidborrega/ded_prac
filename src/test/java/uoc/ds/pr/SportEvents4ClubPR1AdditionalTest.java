@@ -10,6 +10,7 @@ import uoc.ds.pr.exceptions.*;
 import uoc.ds.pr.model.Player;
 import uoc.ds.pr.model.Rating;
 import uoc.ds.pr.model.SportEvent;
+import uoc.ds.pr.util.StringUtils;
 
 import java.time.LocalDate;
 
@@ -35,13 +36,13 @@ public class SportEvents4ClubPR1AdditionalTest {
     @Test
     public void testAddPlayerLimitExceeded() throws LimitExceededException {
         for (int i = this.sportEvents4Club.numPlayers(); i < SportEvents4Club.MAX_NUM_PLAYER; i++) {
-            this.sportEvents4Club.addPlayer("User " + i, this.getRandomString(25),
-                this.getRandomString(100), LocalDate.of(1970,1,1));
+            this.sportEvents4Club.addPlayer("User " + i, StringUtils.getRandomString(25),
+                    StringUtils.getRandomString(100), LocalDate.of(1970,1,1));
         }
         Assert.assertEquals(this.sportEvents4Club.numPlayers(), SportEvents4Club.MAX_NUM_PLAYER);
         Assert.assertThrows(LimitExceededException.class, ()->
                 this.sportEvents4Club.addPlayer("User " + this.sportEvents4Club.numPlayers() + 1,
-                    this.getRandomString(25), this.getRandomString(100),
+                    StringUtils.getRandomString(25), StringUtils.getRandomString(100),
                     LocalDate.of(1970,1,1))
         );
     }
@@ -50,13 +51,13 @@ public class SportEvents4ClubPR1AdditionalTest {
     @Test
     public void testAddOrganizingEntityLimitExceeded() throws LimitExceededException {
         for (int i = this.sportEvents4Club.numOrganizingEntities(); i < SportEvents4Club.MAX_NUM_ORGANIZING_ENTITIES; i++) {
-            this.sportEvents4Club.addOrganizingEntity(i+20, this.getRandomString(120),
-                this.getRandomString(255));
+            this.sportEvents4Club.addOrganizingEntity(i+20, StringUtils.getRandomString(120),
+                StringUtils.getRandomString(255));
         }
         Assert.assertEquals(this.sportEvents4Club.numOrganizingEntities(), SportEvents4Club.MAX_NUM_ORGANIZING_ENTITIES);
         Assert.assertThrows(LimitExceededException.class, ()->
             this.sportEvents4Club.addOrganizingEntity(this.sportEvents4Club.numOrganizingEntities() + 1,
-                this.getRandomString(120), this.getRandomString(255))
+                StringUtils.getRandomString(120), StringUtils.getRandomString(255))
         );
     }
 
@@ -66,7 +67,7 @@ public class SportEvents4ClubPR1AdditionalTest {
         Assert.assertTrue(this.sportEvents4Club.numOrganizingEntities() > 0);
         Assert.assertThrows(OrganizingEntityNotFoundException.class, ()->
             this.sportEvents4Club.addFile("100", "TEST-EVENT", OE_NOT_FOUND,
-                this.getRandomString(255), SportEvents4Club.Type.SMALL,
+                StringUtils.getRandomString(255), SportEvents4Club.Type.SMALL,
                 SportEvents4Club.FLAG_ALL_OPTS, 100, LocalDate.of(2022, 1, 1),
                 LocalDate.of(2022, 11, 15)
             )
@@ -78,7 +79,7 @@ public class SportEvents4ClubPR1AdditionalTest {
     public void testUpdateFileFilesNotFound() {
         Assert.assertThrows(NoFilesException.class, ()->
             this.newApp.updateFile(SportEvents4Club.Status.ENABLED,
-                    LocalDate.of(2022,11, 30), this.getRandomString(255))
+                    LocalDate.of(2022,11, 30), StringUtils.getRandomString(255))
         );
     }
 
@@ -86,28 +87,28 @@ public class SportEvents4ClubPR1AdditionalTest {
     @Test
     public void testAddSportEventFullContainer() throws DSException {
         int orgId = 1;
-        this.newApp.addOrganizingEntity(orgId, this.getRandomString(10), this.getRandomString(255));
+        this.newApp.addOrganizingEntity(orgId, StringUtils.getRandomString(10), StringUtils.getRandomString(255));
         for (int i = 0; i < SportEvents4Club.MAX_NUM_SPORT_EVENTS; i++) {
             // Create new file
             this.newApp.addFile("'" + i + "'", "TEST-EVENT-" + i, orgId,
-                this.getRandomString(255), SportEvents4Club.Type.SMALL,
+                StringUtils.getRandomString(255), SportEvents4Club.Type.SMALL,
                 SportEvents4Club.FLAG_ALL_OPTS, 100, LocalDate.of(2022, 1, 1),
                 LocalDate.of(2022, 11, 15)
             );
             // Aprove file and add new sport event for each iterate.
             this.newApp.updateFile(SportEvents4Club.Status.ENABLED,
-                LocalDate.of(2022, 1, 1), this.getRandomString(255));
+                LocalDate.of(2022, 1, 1), StringUtils.getRandomString(255));
         }
 
         // Try to force exception creating new sport event.
         this.newApp.addFile("'" + (this.newApp.numFiles()+1) + "'", "TEST-EVENT-" + (this.newApp.numFiles()+1), orgId,
-            this.getRandomString(255), SportEvents4Club.Type.SMALL,
+            StringUtils.getRandomString(255), SportEvents4Club.Type.SMALL,
             SportEvents4Club.FLAG_ALL_OPTS, 100, LocalDate.of(2022, 1, 1),
             LocalDate.of(2022, 11, 15)
         );
         Assert.assertThrows(FullContainerException.class, ()->
             this.newApp.updateFile(SportEvents4Club.Status.ENABLED,
-            LocalDate.of(2022, 1, 1), this.getRandomString(255))
+            LocalDate.of(2022, 1, 1), StringUtils.getRandomString(255))
         );
     }
 
@@ -116,7 +117,7 @@ public class SportEvents4ClubPR1AdditionalTest {
     public void testAddRatingSportEventNotFound() {
         Assert.assertThrows(SportEventNotFoundException.class, () ->
             this.sportEvents4Club.addRating("playerRandom", "eventRandom",
-                SportEvents4Club.Rating.FIVE, this.getRandomString(40))
+                SportEvents4Club.Rating.FIVE, StringUtils.getRandomString(40))
         );
     }
 
@@ -126,7 +127,7 @@ public class SportEvents4ClubPR1AdditionalTest {
         SportEvent sportEvent = this.sportEvents4Club.bestSportEvent();
         Assert.assertThrows(PlayerNotFoundException.class, () ->
                 this.sportEvents4Club.addRating("playerRandom", sportEvent.getEventId(),
-                        SportEvents4Club.Rating.FIVE, this.getRandomString(40))
+                        SportEvents4Club.Rating.FIVE, StringUtils.getRandomString(40))
         );
     }
 
@@ -142,7 +143,7 @@ public class SportEvents4ClubPR1AdditionalTest {
         // Cross data to throw PlayerNotInSportEventException
         Assert.assertThrows(PlayerNotInSportEventException.class, () ->
                 this.sportEvents4Club.addRating("idPlayer1", "EV-1102",
-                        SportEvents4Club.Rating.FIVE, this.getRandomString(40))
+                        SportEvents4Club.Rating.FIVE, StringUtils.getRandomString(40))
         );
     }
 
@@ -192,27 +193,6 @@ public class SportEvents4ClubPR1AdditionalTest {
         Assert.assertThrows(NoSportEventsException.class, () ->
                 this.sportEvents4Club.getEventsByPlayer("idPlayer12")
         );
-    }
-
-    private String getRandomString(int size) {
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "0123456789"
-                + "abcdefghijklmnopqrstuvxyz";
-
-        // create StringBuffer size of AlphaNumericString
-        StringBuilder sb = new StringBuilder(size);
-        for (int i = 0; i < size; i++) {
-            // generate a random number between
-            // 0 to AlphaNumericString variable length
-            int index
-                    = (int)(AlphaNumericString.length()
-                    * Math.random());
-
-            // add Character one by one in end of sb
-            sb.append(AlphaNumericString
-                    .charAt(index));
-        }
-        return sb.toString();
     }
 
 }
