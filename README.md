@@ -234,12 +234,12 @@ Cada un dels casos de prova de **ResourceUtilTest** té definit un número de pa
 
 En quant a la implementació del TAD de vector ordenat, s'ha preparat un joc de proves adicionals a la classe de prova **OrderedVectorTest**.
  ### OrderedVectorTest:
--***testAddandIsFull***: comprova quan es dona d'alta un element i si ha excés.
--***testIsEmpty***: comprova si el vector està buit o no.
--***testGetElementSizeAndValues***: comprova el tamany del vector.
--***testCheckInAlphabeticOrder***: comprova que es realitzi la ordenació alfabètica en l'alta d'elements en el vector.
--***testUpdateAndCheckInAlphabeticOrder***: comprova que es realitzi la ordenació alfabètica en l'update d'elements en el vector.
--***testDeleteAndCheckOrder***: comprova que es realitzi la ordenació alfabètica en la baixa d'elements en el vector.
+- ***testAddandIsFull***: comprova quan es dona d'alta un element i si ha excés.
+- ***testIsEmpty***: comprova si el vector està buit o no.
+- ***testGetElementSizeAndValues***: comprova el tamany del vector.
+- ***testCheckInAlphabeticOrder***: comprova que es realitzi la ordenació alfabètica en l'alta d'elements en el vector.
+- ***testUpdateAndCheckInAlphabeticOrder***: comprova que es realitzi la ordenació alfabètica en l'update d'elements en el vector.
+- ***testDeleteAndCheckOrder***: comprova que es realitzi la ordenació alfabètica en la baixa d'elements en el vector.
 
 En el següent apartat s'inclouen diferents captures de pantalla referents al resultat dels diferents jocs de proves utilitzats.
 ## Annex
